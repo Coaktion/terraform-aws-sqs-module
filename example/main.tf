@@ -39,8 +39,11 @@ module "name_service_example_sqs_queues" {
   queues = [
     {
       name = "name_service_example"
+      fifo_queue = false
     },
+    {
+      name = "name_service_example_fifo"
+    }
   ]
-  resource_prefix = "visual_triggers"
-  fifo_queue = true
+  default_fifo_queue = true
 }

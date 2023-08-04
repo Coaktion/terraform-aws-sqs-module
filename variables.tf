@@ -4,13 +4,13 @@ variable "default_message_retention_in_seconds" {
   default     = 345600
 }
 
-variable "max_message_retention_in_seconds" {
+variable "default_retention_seconds" {
   description = "The number of seconds Amazon SQS retains a message. Integer representing seconds, from 60 (1 minute) to 1209600 (14 days). The default is 345600 (4 days)."
   type        = number
   default     = 1209600
 }
 
-variable "max_message_size_in_bytes" {
+variable "default_max_message" {
   description = "The limit of how many bytes a message can contain before Amazon SQS rejects it. Integer representing bytes, from 1024 (1 KiB) to 262144 (256 KiB). The default is 262144 (256 KiB)."
   type        = number
   default     = 262144
@@ -38,7 +38,13 @@ variable "queues" {
   description = "A list of maps describing the queues to create. Each map must contain a name key. The following keys are optional: delay_seconds, max_message, message_retention_seconds, receive_wait_time_seconds, max_receive_count, topics_to_subscribe."
   type = list(object({
     name                = string
-    topics_to_subscribe = list(map(string))
+    delay_seconds       = optional(number)
+    max_message         = optional(number)
+    message_retention_seconds = optional(number)
+    receive_wait_time_seconds = optional(number)
+    max_receive_count   = optional(number)
+    fifo_queue          = optional(bool)
+    topics_to_subscribe = optional(list(map(string)), [])
   }))
   default = []
 }
@@ -55,7 +61,7 @@ variable "resource_prefix" {
   default     = ""
 }
 
-variable "fifo_queue" {
+variable "default_fifo_queue" {
   description = "Boolean designating a FIFO queue. If not set, it defaults to false making it standard."
   type        = bool
   default     = false

@@ -10,10 +10,14 @@ module "sqs" {
 
   queues = [
     {
-      name = "name_service_example"
+      name = "my_queue"
+      fifo_queue = false
     },
+    {
+      name = "my_fifo_queue"
+    }
   ]
-  resource_prefix = "visual_triggers"
-  fifo_queue = true
+  resource_prefix = "prefix_queue"
+  default_fifo_queue = true
 }
 ```
