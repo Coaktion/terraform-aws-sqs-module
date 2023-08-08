@@ -8,7 +8,7 @@ locals {
       max_message               = lookup(queue, "max_message", var.default_max_message)
       message_retention_seconds = lookup(queue, "message_retention_seconds", var.default_retention_seconds)
       receive_wait_time_seconds = lookup(queue, "receive_wait_time_seconds", var.default_receive_wait_time_seconds)
-      max_receive_count         = lookup(queue, "max_receive_count", var.default_max_receive_count)
+      max_receive_count         = queue.max_receive_count != null ? queue.max_receive_count : var.default_max_receive_count
       topics_to_subscribe       = queue.topics_to_subscribe
     }
   ])
