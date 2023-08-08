@@ -9,6 +9,7 @@ locals {
       message_retention_seconds = lookup(queue, "message_retention_seconds", var.default_retention_seconds)
       receive_wait_time_seconds = lookup(queue, "receive_wait_time_seconds", var.default_receive_wait_time_seconds)
       max_receive_count         = lookup(queue, "max_receive_count", var.default_max_receive_count)
+      topics_to_subscribe       = queue.topics_to_subscribe
     }
   ])
 
@@ -26,10 +27,9 @@ resource "aws_sqs_queue" "queues" {
   receive_wait_time_seconds = each.value.receive_wait_time_seconds
 
   redrive_policy = jsonencode({
-    deadLetterTargetArn = aws_sqs_queue.dead_queues[each.key].arn,
-    maxReceiveCount     = each.value.max_receive_count,
+    deadLetterTargetArn = aws_sqs_queue.dead_queues[each.key].arn
+    maxReceiveCount     = each.value.max_receive_count
   })
-
   depends_on = [
     aws_sqs_queue.dead_queues,
   ]

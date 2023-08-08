@@ -5,5 +5,5 @@ output "queues" {
 
 output "local_queues" {
     description = "The SQS queues created by this module."
-    value       = local.sqs_queues
+    value       = local.queues
 }
