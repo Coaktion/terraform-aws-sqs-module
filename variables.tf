@@ -37,14 +37,17 @@ variable "default_max_receive_count" {
 variable "queues" {
   description = "A list of maps describing the queues to create. Each map must contain a name key. The following keys are optional: delay_seconds, max_message, message_retention_seconds, receive_wait_time_seconds, max_receive_count, topics_to_subscribe."
   type = list(object({
-    name                = string
-    delay_seconds       = optional(number)
-    max_message         = optional(number)
+    name                      = string
+    delay_seconds             = optional(number)
+    max_message               = optional(number)
     message_retention_seconds = optional(number)
     receive_wait_time_seconds = optional(number)
-    max_receive_count   = optional(number)
-    fifo_queue          = optional(bool)
-    topics_to_subscribe = optional(list(map(string)), [])
+    max_receive_count         = optional(number)
+    fifo_queue                = optional(bool)
+    topics_to_subscribe = optional(list(object({
+      name          = string
+      filter_policy = optional(map(string))
+    })), [])
   }))
   default = []
 }
