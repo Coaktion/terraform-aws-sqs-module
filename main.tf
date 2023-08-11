@@ -25,6 +25,7 @@ resource "aws_sqs_queue" "queues" {
   max_message_size          = each.value.max_message
   message_retention_seconds = each.value.message_retention_seconds
   receive_wait_time_seconds = each.value.receive_wait_time_seconds
+  content_based_deduplication = each.value.fifo_queue ? true : false
 
   redrive_policy = jsonencode({
     deadLetterTargetArn = aws_sqs_queue.dead_queues[each.key].arn
@@ -52,6 +53,7 @@ resource "aws_sqs_queue" "dead_queues" {
   max_message_size          = each.value.max_message
   message_retention_seconds = each.value.message_retention_seconds
   receive_wait_time_seconds = each.value.receive_wait_time_seconds
+  content_based_deduplication = each.value.fifo_queue ? true : false
 
   tags = var.default_tags
 
