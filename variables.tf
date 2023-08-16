@@ -46,7 +46,7 @@ variable "queues" {
     fifo_queue                = optional(bool)
     topics_to_subscribe = optional(list(object({
       name          = string
-      filter_policy = optional(map(string))
+      filter_policy = optional(map(list(string)))
     })), [])
   }))
   default = []
