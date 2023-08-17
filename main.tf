@@ -19,12 +19,12 @@ locals {
 resource "aws_sqs_queue" "queues" {
   for_each = local.sqs_queues
 
-  name                      = each.key
-  fifo_queue                = each.value.fifo_queue
-  delay_seconds             = each.value.delay_seconds
-  max_message_size          = each.value.max_message
-  message_retention_seconds = each.value.message_retention_seconds
-  receive_wait_time_seconds = each.value.receive_wait_time_seconds
+  name                        = each.key
+  fifo_queue                  = each.value.fifo_queue
+  delay_seconds               = each.value.delay_seconds
+  max_message_size            = each.value.max_message
+  message_retention_seconds   = each.value.message_retention_seconds
+  receive_wait_time_seconds   = each.value.receive_wait_time_seconds
   content_based_deduplication = each.value.fifo_queue ? true : false
 
   redrive_policy = jsonencode({
@@ -47,12 +47,12 @@ resource "aws_sqs_queue" "queues" {
 resource "aws_sqs_queue" "dead_queues" {
   for_each = local.sqs_queues
 
-  name                      = "dead__${each.key}"
-  fifo_queue                = each.value.fifo_queue
-  delay_seconds             = each.value.delay_seconds
-  max_message_size          = each.value.max_message
-  message_retention_seconds = each.value.message_retention_seconds
-  receive_wait_time_seconds = each.value.receive_wait_time_seconds
+  name                        = "dead__${each.key}"
+  fifo_queue                  = each.value.fifo_queue
+  delay_seconds               = each.value.delay_seconds
+  max_message_size            = each.value.max_message
+  message_retention_seconds   = each.value.message_retention_seconds
+  receive_wait_time_seconds   = each.value.receive_wait_time_seconds
   content_based_deduplication = each.value.fifo_queue ? true : false
 
   tags = var.default_tags
