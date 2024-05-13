@@ -34,16 +34,23 @@ variable "default_max_receive_count" {
   default     = 5
 }
 
+variable "default_visibility_timeout_seconds" {
+  description = "The visibility timeout for the queue. An integer from 0 to 43200 (12 hours). The default is 30."
+  type        = number
+  default     = 30
+}
+
 variable "queues" {
   description = "A list of maps describing the queues to create. Each map must contain a name key. The following keys are optional: delay_seconds, max_message, message_retention_seconds, receive_wait_time_seconds, max_receive_count, topics_to_subscribe."
   type = list(object({
-    name                      = string
-    delay_seconds             = optional(number)
-    max_message               = optional(number)
-    message_retention_seconds = optional(number)
-    receive_wait_time_seconds = optional(number)
-    max_receive_count         = optional(number)
-    fifo_queue                = optional(bool)
+    name                       = string
+    delay_seconds              = optional(number)
+    max_message                = optional(number)
+    message_retention_seconds  = optional(number)
+    receive_wait_time_seconds  = optional(number)
+    visibility_timeout_seconds = optional(number)
+    max_receive_count          = optional(number)
+    fifo_queue                 = optional(bool)
     topics_to_subscribe = optional(list(object({
       name          = string
       filter_policy = optional(map(list(string)))
