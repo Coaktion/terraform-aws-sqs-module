@@ -6,7 +6,7 @@ Terraform module which creates SQS resources on AWS.
 
 ```hcl
 module "sqs" {
-  source = "github.com/paulo-tinoco/terraform-sqs-module"
+  source = "github.com/Coaktion/terraform-aws-sqs-module"
 
   queues = [
     {
