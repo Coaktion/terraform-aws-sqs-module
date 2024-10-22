@@ -6,7 +6,7 @@ locals {
       fifo_queue                 = queue.fifo_queue != null ? queue.fifo_queue : var.default_fifo_queue
       delay_seconds              = lookup(queue, "delay_seconds", var.default_delay_seconds)
       max_message                = lookup(queue, "max_message", var.default_max_message)
-      visibility_timeout_seconds = lookup(queue, "visibility_timeout_seconds", var.default_visibility_timeout_seconds)
+      visibility_timeout_seconds = queue.visibility_timeout_seconds != null ? queue.visibility_timeout_seconds : var.default_visibility_timeout_seconds
       message_retention_seconds  = lookup(queue, "message_retention_seconds", var.default_retention_seconds)
       receive_wait_time_seconds  = lookup(queue, "receive_wait_time_seconds", var.default_receive_wait_time_seconds)
       max_receive_count          = queue.max_receive_count != null ? queue.max_receive_count : var.default_max_receive_count
